@@ -41,3 +41,33 @@ li::before {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
+/* MI CÓDIGO */
+
+#juego div {
+
+  background-color: #8eaf8d;
+  box-sizing: border-box;
+  width: 33.333%;
+  height: 33.333%;
+}
+
+.img-puzzle {
+  height: 300px;
+  widows: 300px;
+  border: solid 1px;
+}
+
+.titulo-puzzle {
+  color: rgb(255, 255, 255);
+  background-color: rgb(233, 0, 102);
+}
+
+.titulo-instrucciones {
+
+  color: rgb(201, 8, 92);
+}
+
+#autor {
+  color: white;
+  background-color: black;
+}
