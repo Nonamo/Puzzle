@@ -63,9 +63,13 @@ li::before {
   float: left;
 }
 
-#imag-1, #imag-2, #imag-3, #imag-4, #imag-5, #imag-6, #imag-7, #imag-8 {
+.imagen {
     height: 100%;
     width: 100%;
+}
+
+.col-40, .col-60 {
+  box-shadow: 0px 2px 4px #888888;
 }
 
 .titulo-puzzle {
