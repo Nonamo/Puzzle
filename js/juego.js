@@ -24,13 +24,13 @@ function mostrarCartelGanador(){
 }
 
 // Intercambia posiciones grilla y en el DOM
-/* Esta función puede ser pensada por partes, incluso separarse en dos funciones, para 
+/* Esta función puede ser pensada por partes, incluso separarse en dos funciones, para
 separar el manejo de posición de la grilla y, por otro lado, el manejo del DOM.
 
-1) Lo primero que hay que pensar es como intercambiar dos posiciones en un arreglo de arreglos. 
+1) Lo primero que hay que pensar es como intercambiar dos posiciones en un arreglo de arreglos.
 Para que tengas en cuenta:
-si queremos intercambiar las posiciones [1,2] con la [0, 0] 
-si hacemos 
+si queremos intercambiar las posiciones [1,2] con la [0, 0]
+si hacemos
 arreglo[1][2] = arreglo[0][0];
 arreglo[0][0] = arreglo[1][2];
 
@@ -38,19 +38,34 @@ En vez de intercambiar esos valores vamos a terminar teniendo en ambas posicione
 Se te ocurre cómo solucionar esto con algo temporal?
 
 2) Como segunda parte tenemos que pensar el intercambio en el dom.
-Para eso, tenés que recordar todas las funciones aprendidas en los videos. 
+Para eso, tenés que recordar todas las funciones aprendidas en los videos.
 
 getElementyById: para obtener los elementos que queremos intercambiar
 parentNode: para obtener el padre de un elemento.
-cloneNode: para clonar un elemento 
+cloneNode: para clonar un elemento
 replaceChild(elem1, elem2): para reemplazar el elem1 por elem2
 
 y recordar cómo es la estructura de árbol del DOM para entender como cada una de estas
-funciones lo modifica. Esto lo podés ver en las clases
-teóricas: https://www.acamica.com/cursos/254/javascript-manipulando-dom. 
+funciones lo modifica. Esto lo podés ver en las clases teóricas: https://www.acamica.com/cursos/254/javascript-manipulando-dom.
 
 */
 function intercambiarPosiciones(filaPos1, columnaPos1, filaPos2, columnaPos2){
+
+  var grillaPosicion1 = grilla[filaPos1][columnaPos1];
+  var grillaPosicion2 = grilla[filaPos2][columnaPos2];
+
+  grilla[filaPos2][columnaPos2] = grillaPosicion1;
+  grilla[filaPos2][columnaPos1] = grillaPosicion2;
+
+  var pieza1 = getElementyById(grillaPosicion1);
+  var clon1 = pieza1.cloneNode(true);
+
+  var pieza2 = getElementyById(grillaPosicion2);
+  var clon2 = pieza2.cloneNode(true);
+
+  var padre = pieza1.parentNode;
+  padre.replaceChild(clon1, pieza2);
+  padre.replaceChild(clon2, pieza1);
 
 }
 
@@ -65,9 +80,9 @@ function posicionValida(fila, columna){
 
 }
 
-/* Movimiento de fichas, en este caso la que se mueve 
+/* Movimiento de fichas, en este caso la que se mueve
 es la blanca intercambiando su posición con otro elemento.
-Las direcciones están dadas por números que representa: 
+Las direcciones están dadas por números que representa:
 arriba, abajo, izquierda, derecha */
 function moverEnDireccion(direccion){
 
@@ -95,8 +110,8 @@ function moverEnDireccion(direccion){
     // Completar
   }
 
-  /* Se chequea si la nueva posición es válida, si lo es, se intercambia. 
-   Para que esta parte del código funcione correctamente deberás haber implementado 
+  /* Se chequea si la nueva posición es válida, si lo es, se intercambia.
+   Para que esta parte del código funcione correctamente deberás haber implementado
    las funciones posicionValida, intercambiarPosiciones y actualizarPosicionVacia */
   if (posicionValida(nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia)){
     intercambiarPosiciones(filaVacia, columnaVacia,
@@ -131,8 +146,8 @@ function mezclarPiezas(veces){
 }
 
 /* capturarTeclas: Esta función captura las teclas presionadas por el usuario. Javascript
-permite detectar eventos, por ejemplo, cuando una tecla es presionada y en 
-base a eso hacer algo. No es necesario que entiendas como funciona esto ahora, 
+permite detectar eventos, por ejemplo, cuando una tecla es presionada y en
+base a eso hacer algo. No es necesario que entiendas como funciona esto ahora,
 en el futuro ya lo vas a aprender. Por ahora, sólo hay que entender que cuando
 se toca una tecla se hace algo en respuesta, en este caso, un movimiento */
 function capturarTeclas(){
@@ -143,16 +158,16 @@ function capturarTeclas(){
       var gano = chequearSiGano();
       if(gano){
         setTimeout(function(){
-          mostrarCartelGanador();  
+          mostrarCartelGanador();
         },500);
-      } 
+      }
       evento.preventDefault();
     }
   })
 }
 
-/* Se inicia el rompecabezas mezclando las piezas 60 veces 
-y ejecutando la función para que se capturen las teclas que 
+/* Se inicia el rompecabezas mezclando las piezas 60 veces
+y ejecutando la función para que se capturen las teclas que
 presiona el usuario */
 function iniciar(){
   mezclarPiezas(60);
